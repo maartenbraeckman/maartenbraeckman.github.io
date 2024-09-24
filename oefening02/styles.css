@@ -1,0 +1,10 @@
+body {
+    font-family: sans-serif;
+    font-size: medium;
+    background-color: lightpink;
+}
+
+img {
+    max-width: 30%;
+    max-height: 30%;
+}
