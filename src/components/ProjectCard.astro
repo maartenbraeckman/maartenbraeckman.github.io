@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { title, description, tags, emoji, link } = project.data;
+const colors = ['var(--pink)', 'var(--yellow)', 'var(--blue)', 'var(--green)', 'var(--purple)'];
+---
+
+<article
+  class={`card sticker ${index % 2 ? 'tilt-right' : 'tilt-left'}`}
+  data-tags={tags.join(' ')}
+  style={`--accent: ${colors[index % colors.length]}`}
+>
+  <div class="emoji" aria-hidden="true">{emoji}</div>
+  <h3>{link ? <a href={link}>{title}</a> : title}</h3>
+  <p>{description}</p>
+  <ul class="tags">
+    {tags.map((tag) => <li class="tag">#{tag}</li>)}
+  </ul>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .emoji {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 2rem;
+    background: var(--accent);
+    border: var(--border);
+    border-radius: 50%;
+  }
+
+  h3 {
+    margin: 0.8rem 0 0.3rem;
+    font-size: 1.4rem;
+  }
+
+  p {
+    flex: 1;
+    margin: 0 0 1rem;
+    color: var(--ink-soft);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+// The big animated name on the home page. Each letter is its own little sticker.
+const name = 'Maarten';
+const colors = ['var(--pink)', 'var(--yellow)', 'var(--blue)', 'var(--green)', 'var(--purple)', 'var(--orange)'];
+const tilts = [-6, 4, -3, 7, -5, 3, -4];
+---
+
+<section class="hero">
+  <p class="hello sticker tilt-left">👋 Hi, I'm</p>
+  <h1 aria-label={name}>
+    {
+      [...name].map((letter, i) => (
+        <span
+          class="letter"
+          aria-hidden="true"
+          style={`--bg: ${colors[i % colors.length]}; --tilt: ${tilts[i % tilts.length]}deg; --delay: ${i * 80}ms`}
+        >
+          {letter}
+        </span>
+      ))
+    }
+  </h1>
+  <p class="tagline">
+    I make things for the web, love travelling in Japan 🗾 and think fennec foxes 🦊 are the
+    coolest animals around.
+  </p>
+  <div class="actions">
+    <a class="button" href="/projects/">See my projects</a>
+    <a class="button secondary" href="/about/">More about me</a>
+  </div>
+  <span class="floater fox" aria-hidden="true">🦊</span>
+  <span class="floater star" aria-hidden="true">⭐</span>
+  <span class="floater gate" aria-hidden="true">⛩️</span>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding: 3rem 0 2rem;
+    text-align: center;
+  }
+
+  .hello {
+    display: inline-block;
+    margin: 0;
+    padding: 0.3rem 1rem;
+    font-weight: 700;
+  }
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(0.15rem, 1vw, 0.4rem);
+    margin: 1.5rem 0;
+    /* shrink with the screen so all letters stay on one line */
+    font-size: min(7rem, 10vw);
+  }
+
+  .letter {
+    display: inline-block;
+    min-width: 0.8em;
+    padding: 0 0.1em;
+    color: #1d1a2f;
+    background: var(--bg);
+    border: var(--border);
+    border-radius: 0.2em;
+    box-shadow: var(--shadow);
+    transform: rotate(var(--tilt));
+    animation: drop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: var(--delay);
+    cursor: default;
+  }
+
+  .letter:hover {
+    animation: wiggle 0.4s ease-in-out;
+  }
+
+  .tagline {
+    max-width: 36rem;
+    margin: 0 auto 1.5rem;
+    font-size: 1.25rem;
+    color: var(--ink-soft);
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .secondary {
+    background: var(--green);
+  }
+
+  .floater {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: float 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .fox {
+    top: 1rem;
+    left: 5%;
+  }
+  .star {
+    top: 2rem;
+    right: 8%;
+    animation-delay: -2s;
+  }
+  .gate {
+    bottom: 1rem;
+    right: 3%;
+    animation-delay: -3.5s;
+  }
+
+  @keyframes drop-in {
+    from {
+      opacity: 0;
+      transform: translateY(-120px) rotate(-30deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) rotate(var(--tilt));
+    }
+  }
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(var(--tilt));
+    }
+    25% {
+      transform: rotate(calc(var(--tilt) - 12deg)) scale(1.08);
+    }
+    75% {
+      transform: rotate(calc(var(--tilt) + 12deg)) scale(1.08);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-6deg);
+    }
+    50% {
+      transform: translateY(-14px) rotate(6deg);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .floater {
+      display: none;
+    }
+  }
+</style>

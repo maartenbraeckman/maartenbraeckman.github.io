@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const facts = [
+  { emoji: '💻', text: 'I write HTML, CSS, TypeScript and JavaScript' },
+  { emoji: '🗾', text: 'Favourite place: Fushimi Inari, with its thousand gates' },
+  { emoji: '🍣', text: 'Will travel for sushi' },
+  { emoji: '🦊', text: 'Spirit animal: the fennec fox' },
+  { emoji: '🚃', text: 'Japanese trains are the best trains' },
+];
+---
+
+<BaseLayout title="About" description="A little bit about Maarten">
+  <h1 class="page-title">About me</h1>
+
+  <div class="intro sticker tilt-left">
+    <p>
+      Hi! I'm Maarten. 👋 I'm learning web development and I love building things that are a bit
+      playful. This site is my sandbox: a place to show what I make and what I'm into.
+    </p>
+    <p>
+      <em>Replace this text with your own story: where you're from, what you study or do, and what
+      gets you excited.</em>
+    </p>
+  </div>
+
+  <h2>Quick facts</h2>
+  <ul class="facts">
+    {
+      facts.map((fact, i) => (
+        <li class={`sticker ${i % 2 ? 'tilt-right' : 'tilt-left'}`}>
+          <span aria-hidden="true">{fact.emoji}</span> {fact.text}
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .intro {
+    max-width: 42rem;
+  }
+
+  .intro p:first-child {
+    margin-top: 0;
+  }
+
+  .intro p:last-child {
+    margin-bottom: 0;
+  }
+
+  h2 {
+    margin-top: 3rem;
+    font-size: 2rem;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .facts span {
+    font-size: 1.5rem;
+    margin-right: 0.3rem;
+  }
+</style>

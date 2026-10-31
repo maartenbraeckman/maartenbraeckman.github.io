@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout title="Blog" description="Maarten's notes and interests">
+  <h1 class="page-title">Blog</h1>
+  <p class="lead">Notes on what I'm learning, building and loving.</p>
+
+  <ul class="posts">
+    {
+      posts.map((post, i) => (
+        <li class={`sticker ${i % 2 ? 'tilt-right' : 'tilt-left'}`}>
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toLocaleDateString('en-GB', { dateStyle: 'long' })}
+          </time>
+          <h2>
+            <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          </h2>
+          <p>{post.data.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .lead {
+    font-size: 1.25rem;
+    color: var(--ink-soft);
+  }
+
+  .posts {
+    display: grid;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    max-width: 42rem;
+  }
+
+  time {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+
+  h2 {
+    margin: 0.2rem 0;
+  }
+
+  p {
+    margin: 0;
+  }
+</style>

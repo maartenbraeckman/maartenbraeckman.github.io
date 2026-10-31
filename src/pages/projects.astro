@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const allTags = [...new Set(projects.flatMap((p) => p.data.tags))].sort();
+---
+
+<BaseLayout title="Projects" description="Things Maarten has built">
+  <h1 class="page-title">Projects</h1>
+
+  <div class="filters" role="group" aria-label="Filter projects by tag">
+    <button class="filter" type="button" data-tag="all" aria-pressed="true">All</button>
+    {
+      allTags.map((tag) => (
+        <button class="filter" type="button" data-tag={tag} aria-pressed="false">
+          #{tag}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="grid">
+    {projects.map((project, i) => <ProjectCard project={project} index={i} />)}
+  </div>
+  <p class="empty" hidden>No projects with that tag yet. 🙈</p>
+</BaseLayout>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .filter {
+    font: inherit;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--paper);
+    border: var(--border);
+    border-radius: 999px;
+    padding: 0.2rem 0.9rem;
+    box-shadow: 3px 3px 0 var(--ink);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+
+  .filter:hover {
+    transform: rotate(-3deg);
+  }
+
+  .filter[aria-pressed='true'] {
+    background: var(--yellow);
+    color: #1d1a2f;
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--ink);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .empty {
+    text-align: center;
+    font-size: 1.25rem;
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const cards = document.querySelectorAll<HTMLElement>('.card');
+  const empty = document.querySelector<HTMLElement>('.empty');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const tag = button.dataset.tag;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+
+      let visible = 0;
+      cards.forEach((card) => {
+        const show = tag === 'all' || card.dataset.tags?.split(' ').includes(tag ?? '');
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      if (empty) empty.hidden = visible > 0;
+    });
+  });
+</script>

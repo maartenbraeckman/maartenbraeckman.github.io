@@ -1,0 +1,173 @@
+/* ---------- Colors (light) ---------- */
+:root {
+  --bg: #fff8ec;
+  --bg-dots: #f1e4cc;
+  --ink: #1d1a2f;
+  --ink-soft: #4a4560;
+  --paper: #ffffff;
+  --pink: #ff7eb6;
+  --yellow: #ffd23f;
+  --blue: #5ec8ff;
+  --green: #7be495;
+  --purple: #b69cff;
+  --orange: #ff9f5a;
+  --border: 3px solid var(--ink);
+  --shadow: 5px 5px 0 var(--ink);
+  --shadow-lg: 8px 8px 0 var(--ink);
+  --radius: 18px;
+  --font: 'Bricolage Grotesque', system-ui, sans-serif;
+  color-scheme: light;
+}
+
+/* ---------- Colors (dark) ---------- */
+:root[data-theme='dark'] {
+  --bg: #17142a;
+  --bg-dots: #252040;
+  --ink: #f6eedd;
+  --ink-soft: #c9c1dd;
+  --paper: #231f3b;
+  --pink: #ff5c9f;
+  --yellow: #f5c518;
+  --blue: #3fb4f2;
+  --green: #4fcf74;
+  --purple: #9b7bff;
+  --orange: #ff8a3d;
+  --shadow: 5px 5px 0 #000;
+  --shadow-lg: 8px 8px 0 #000;
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font);
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--bg-dots) 2px, transparent 2px);
+  background-size: 24px 24px;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+main {
+  flex: 1;
+  width: min(1000px, 100% - 2rem);
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 3px dashed var(--pink);
+  outline-offset: 3px;
+}
+
+/* ---------- Reusable sticker bits ---------- */
+.sticker {
+  background: var(--paper);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sticker:hover {
+  transform: translate(-2px, -2px) rotate(0deg);
+  box-shadow: var(--shadow-lg);
+}
+
+.tilt-left {
+  transform: rotate(-1.5deg);
+}
+.tilt-right {
+  transform: rotate(1.5deg);
+}
+
+.page-title {
+  display: inline-block;
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  margin: 0.5rem 0 1.5rem;
+  padding: 0.2rem 1rem;
+  background: var(--yellow);
+  color: #1d1a2f;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transform: rotate(-2deg);
+}
+
+.button {
+  display: inline-block;
+  font: inherit;
+  font-weight: 700;
+  color: #1d1a2f;
+  background: var(--pink);
+  border: var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  padding: 0.5rem 1.25rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1d1a2f;
+  background: var(--blue);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.05rem 0.6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
