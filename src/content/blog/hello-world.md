@@ -13,8 +13,8 @@ CSS and TypeScript, but in reusable pieces.
 
 ## What you'll find here
 
-- Things I'm building
+- Things I'm building, especially around AI and data
 - Notes on what I'm learning
-- Probably a lot about Japan and fennec foxes 🦊
+- Probably a lot about Japan, fennec foxes 🦊 and bunnies 🐰
 
 To write a new post, I just add a Markdown file to `src/content/blog/`. That's it!
