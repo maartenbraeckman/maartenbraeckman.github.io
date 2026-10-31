@@ -11,18 +11,18 @@ const tilts = [-6, 4, -3, 7, -5, 3, -4];
     {
       [...name].map((letter, i) => (
         <span
-          class="letter"
+          class="drop"
           aria-hidden="true"
           style={`--bg: ${colors[i % colors.length]}; --tilt: ${tilts[i % tilts.length]}deg; --delay: ${i * 80}ms`}
         >
-          {letter}
+          <span class="letter">{letter}</span>
         </span>
       ))
     }
   </h1>
   <p class="tagline">
-    I make things for the web, love travelling in Japan 🗾 and think fennec foxes 🦊 are the
-    coolest animals around.
+    I'm specializing in AI and data engineering 🤖, I love travelling in Japan 🗾, and I'm a big
+    fan of fennec foxes 🦊 and bunnies 🐰.
   </p>
   <div class="actions">
     <a class="button" href="/projects/">See my projects</a>
@@ -31,6 +31,8 @@ const tilts = [-6, 4, -3, 7, -5, 3, -4];
   <span class="floater fox" aria-hidden="true">🦊</span>
   <span class="floater star" aria-hidden="true">⭐</span>
   <span class="floater gate" aria-hidden="true">⛩️</span>
+  <span class="floater bunny" aria-hidden="true">🐰</span>
+  <span class="floater chart" aria-hidden="true">📊</span>
 </section>
 
 <style>
@@ -57,6 +59,14 @@ const tilts = [-6, 4, -3, 7, -5, 3, -4];
     font-size: min(7rem, 10vw);
   }
 
+  /* Outer span: drops in once when the page loads. */
+  .drop {
+    display: inline-block;
+    animation: drop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: var(--delay);
+  }
+
+  /* Inner span: the sticker itself, which wiggles on hover. */
   .letter {
     display: inline-block;
     min-width: 0.8em;
@@ -67,8 +77,6 @@ const tilts = [-6, 4, -3, 7, -5, 3, -4];
     border-radius: 0.2em;
     box-shadow: var(--shadow);
     transform: rotate(var(--tilt));
-    animation: drop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: var(--delay);
     cursor: default;
   }
 
@@ -114,6 +122,16 @@ const tilts = [-6, 4, -3, 7, -5, 3, -4];
     right: 3%;
     animation-delay: -3.5s;
   }
+  .bunny {
+    bottom: 1.5rem;
+    left: 4%;
+    animation-delay: -1s;
+  }
+  .chart {
+    top: 45%;
+    left: 1%;
+    animation-delay: -4.2s;
+  }
 
   @keyframes drop-in {
     from {
@@ -122,7 +140,7 @@ const tilts = [-6, 4, -3, 7, -5, 3, -4];
     }
     to {
       opacity: 1;
-      transform: translateY(0) rotate(var(--tilt));
+      transform: none;
     }
   }
 

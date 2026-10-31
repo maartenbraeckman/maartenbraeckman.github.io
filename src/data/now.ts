@@ -3,7 +3,7 @@ export const nowUpdated = '2026-10-31';
 
 export const now = [
   { emoji: '🛠️', label: 'Building', text: 'This very website, with Astro' },
-  { emoji: '📚', label: 'Learning', text: 'Components, layouts and content collections' },
   { emoji: '🗾', label: 'Dreaming of', text: 'My next trip to Japan' },
-  { emoji: '🦊', label: 'Obsessed with', text: 'Fennec foxes, as always' },
+  { emoji: '🤖', label: 'Studying', text: 'AI and data engineering' },
+  { emoji: '🐰', label: 'Obsessed with', text: 'Bunnies and fennec foxes, as always' },
 ];

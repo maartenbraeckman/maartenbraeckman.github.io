@@ -1,8 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+// Your toolbox. Add or remove whatever matches what you actually use.
+const skills = [
+  { name: 'Python', emoji: '🐍' },
+  { name: 'SQL', emoji: '🗄️' },
+  { name: 'Data pipelines', emoji: '🔀' },
+  { name: 'Machine learning', emoji: '🧠' },
+  { name: 'TypeScript', emoji: '🟦' },
+  { name: 'HTML & CSS', emoji: '🎨' },
+];
+
 const facts = [
-  { emoji: '💻', text: 'I write HTML, CSS, TypeScript and JavaScript' },
+  { emoji: '🤖', text: 'Specializing in AI and data engineering' },
+  { emoji: '🐰', text: 'Bunnies are the best, no discussion' },
   { emoji: '🗾', text: 'Favourite place: Fushimi Inari, with its thousand gates' },
   { emoji: '🍣', text: 'Will travel for sushi' },
   { emoji: '🦊', text: 'Spirit animal: the fennec fox' },
@@ -15,14 +26,26 @@ const facts = [
 
   <div class="intro sticker tilt-left">
     <p>
-      Hi! I'm Maarten. 👋 I'm learning web development and I love building things that are a bit
-      playful. This site is my sandbox: a place to show what I make and what I'm into.
+      Hi! I'm Maarten. 👋 I'm specializing in AI and data engineering: building the pipelines that
+      move data around and the models that learn from it. I also love making playful things for
+      the web. This site is my sandbox, a place to show what I make and what I'm into.
     </p>
     <p>
       <em>Replace this text with your own story: where you're from, what you study or do, and what
       gets you excited.</em>
     </p>
   </div>
+
+  <h2>My toolbox</h2>
+  <ul class="skills">
+    {
+      skills.map((skill, i) => (
+        <li class="skill" style={`--tilt: ${i % 2 ? 3 : -3}deg`}>
+          <span aria-hidden="true">{skill.emoji}</span> {skill.name}
+        </li>
+      ))
+    }
+  </ul>
 
   <h2>Quick facts</h2>
   <ul class="facts">
@@ -52,6 +75,38 @@ const facts = [
   h2 {
     margin-top: 3rem;
     font-size: 2rem;
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .skill {
+    font-weight: 700;
+    color: #1d1a2f;
+    background: var(--green);
+    border: var(--border);
+    border-radius: 999px;
+    box-shadow: 3px 3px 0 var(--ink);
+    padding: 0.3rem 1rem;
+    transform: rotate(var(--tilt));
+    transition: transform 0.2s ease;
+  }
+
+  .skill:nth-child(3n + 2) {
+    background: var(--blue);
+  }
+
+  .skill:nth-child(3n) {
+    background: var(--yellow);
+  }
+
+  .skill:hover {
+    transform: rotate(0deg) scale(1.08);
   }
 
   .facts {

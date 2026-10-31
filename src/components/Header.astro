@@ -12,7 +12,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
 ---
 
 <header>
-  <a href="/" class="logo" aria-label="Home">MB</a>
+  <a href="/" class="logo" aria-label="Home"><span class="face">MB</span></a>
   <nav aria-label="Main">
     <ul>
       {
@@ -45,24 +45,32 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     padding-right: 3.5rem;
   }
 
+  /* The link holds the shadow and stays still; only the face inside spins. */
   .logo {
-    display: grid;
-    place-items: center;
+    display: block;
     width: 3rem;
     height: 3rem;
-    font-weight: 800;
+    border-radius: 50%;
+    box-shadow: var(--shadow);
     text-decoration: none;
+  }
+
+  .face {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font-weight: 800;
     color: #1d1a2f;
     background: var(--orange);
     border: var(--border);
     border-radius: 50%;
-    box-shadow: var(--shadow);
     transform: rotate(-8deg);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
   }
 
-  .logo:hover {
-    transform: rotate(352deg) scale(1.1);
+  .logo:hover .face {
+    transform: rotate(352deg);
   }
 
   ul {
