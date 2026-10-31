@@ -1,0 +1,24 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <p>
+    Made with 🧡, lots of stickers and <a href="https://astro.build">Astro</a> · © {year} Maarten
+    Braeckman
+  </p>
+</footer>
+
+<style>
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: var(--border);
+    background: var(--paper);
+    font-size: 0.95rem;
+  }
+
+  p {
+    margin: 0;
+  }
+</style>

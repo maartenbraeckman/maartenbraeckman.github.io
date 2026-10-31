@@ -1,0 +1,76 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="post sticker">
+    <a href="/blog/" class="back">← All posts</a>
+    <h1>{post.data.title}</h1>
+    <time datetime={post.data.date.toISOString()}>
+      {post.data.date.toLocaleDateString('en-GB', { dateStyle: 'long' })}
+    </time>
+    <div class="content">
+      <Content />
+    </div>
+    {
+      post.data.tags.length > 0 && (
+        <ul class="tags">
+          {post.data.tags.map((tag) => (
+            <li class="tag">#{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .post:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+  }
+
+  .back {
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin: 1rem 0 0.3rem;
+  }
+
+  time {
+    color: var(--ink-soft);
+    font-weight: 700;
+  }
+
+  .content :global(code) {
+    background: var(--bg-dots);
+    padding: 0.1em 0.35em;
+    border-radius: 6px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+  }
+</style>

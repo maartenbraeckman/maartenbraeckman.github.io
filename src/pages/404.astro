@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Not found">
+  <div class="lost">
+    <p class="fox" aria-hidden="true">🦊</p>
+    <h1 class="page-title">404: this fox got lost</h1>
+    <p>The page you're looking for doesn't exist (yet).</p>
+    <a class="button" href="/">Take me home</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .lost {
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .fox {
+    font-size: 5rem;
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+// A light-switch pull cord that hangs from the top of the screen.
+// Pull it (click, tap, or press Enter/Space) to switch between light and dark.
+---
+
+<button class="cord" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+  <span class="string" aria-hidden="true"></span>
+  <span class="knob" aria-hidden="true">💡</span>
+</button>
+
+<style>
+  .cord {
+    position: fixed;
+    top: 0;
+    right: 1.5rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: grab;
+    transform-origin: top center;
+    animation: sway 4s ease-in-out infinite;
+  }
+
+  .string {
+    width: 3px;
+    height: 70px;
+    background: var(--ink);
+    transition: height 0.15s ease;
+  }
+
+  .knob {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.2rem;
+    background: var(--yellow);
+    border: var(--border);
+    border-radius: 50%;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  :global(:root[data-theme='dark']) .knob {
+    background: var(--purple);
+    filter: grayscale(0.6);
+  }
+
+  .cord:hover .string {
+    height: 80px;
+  }
+
+  /* the "pulled" state, added for a moment by the script */
+  .cord.pulled {
+    animation: none;
+  }
+  .cord.pulled .string {
+    height: 110px;
+  }
+
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(2deg);
+    }
+    50% {
+      transform: rotate(-2deg);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cord {
+      right: 0.75rem;
+    }
+    .string {
+      height: 40px;
+    }
+    .cord:hover .string {
+      height: 48px;
+    }
+    .cord.pulled .string {
+      height: 70px;
+    }
+  }
+</style>
+
+<script>
+  const cord = document.querySelector<HTMLButtonElement>('.cord');
+  const root = document.documentElement;
+
+  const sync = () => cord?.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));
+  sync();
+
+  cord?.addEventListener('click', () => {
+    cord.classList.add('pulled');
+
+    // flip the theme halfway through the pull, like a real switch "click"
+    setTimeout(() => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {}
+      sync();
+    }, 120);
+
+    setTimeout(() => cord.classList.remove('pulled'), 260);
+  });
+</script>
